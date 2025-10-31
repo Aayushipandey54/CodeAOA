@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Prim’s Algorithm | AOA Experiment</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body{font-family:Consolas,monospace;background:#101010;color:#e0e0e0;margin:20px;}
+    pre{background:#181818;border:1px solid #444;padding:12px;border-radius:8px;overflow:auto;}
+    a{color:#8ab4f8;}
+  </style>
+</head>
+<body>
+
+<h1>Prim’s Algorithm (Minimum Cost Spanning Tree)</h1>
+
+<h2>Code</h2>
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;limits.h&gt;
+
+#define V 5
+
+int minKey(int key[], int mstSet[]) {
+    int min = INT_MAX, min_index;
+    for (int v = 0; v &lt; V; v++)
+        if (mstSet[v] == 0 &amp;&amp; key[v] &lt; min)
+            min = key[v], min_index = v;
+    return min_index;
+}
+
+void printMST(int parent[], int graph[V][V]) {
+    int totalCost = 0;
+    printf("Edge \tWeight\n");
+    for (int i = 1; i &lt; V; i++) {
+        printf("%d - %d \t%d \n", parent[i], i, graph[i][parent[i]]);
+        totalCost += graph[i][parent[i]];
+    }
+    printf("Total Minimum Cost of Spanning Tree = %d\n", totalCost);
+}
+
+void primMST(int graph[V][V]) {
+    int parent[V], key[V], mstSet[V];
+    for (int i = 0; i &lt; V; i++) {
+        key[i] = INT_MAX; mstSet[i] = 0;
+    }
+    key[0] = 0; parent[0] = -1;
+
+    for (int count = 0; count &lt; V - 1; count++) {
+        int u = minKey(key, mstSet);
+        mstSet[u] = 1;
+        for (int v = 0; v &lt; V; v++)
+            if (graph[u][v] &amp;&amp; mstSet[v] == 0 &amp;&amp; graph[u][v] &lt; key[v]) {
+                parent[v] = u;
+                key[v] = graph[u][v];
+            }
+    }
+    printMST(parent, graph);
+}
+
+int main() {
+    int graph[V][V] = {
+        {0, 2, 0, 6, 0},
+        {2, 0, 3, 8, 5},
+        {0, 3, 0, 0, 7},
+        {6, 8, 0, 0, 9},
+        {0, 5, 7, 9, 0}
+    };
+    primMST(graph);
+    return 0;
+}
+
+/*
+Prim’s Algorithm for MST
+Time Complexity: O(V²)
+Space Complexity: O(V²)
+*/
+</pre>
+
+<h2>Output</h2>
+<pre>
+Edge    Weight
+0 - 1   2
+1 - 2   3
+0 - 3   6
+1 - 4   5
+Total Minimum Cost of Spanning Tree = 16
+</pre>
+
+<p><a href="../index.html">← Back</a></p>
+
+</body>
+</html>

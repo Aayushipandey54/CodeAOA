@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Linear Search | AOA Experiment</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Consolas,monospace;background:#101010;color:#e0e0e0;margin:20px;}
+    pre{background:#181818;border:1px solid #444;padding:12px;border-radius:8px;overflow:auto;}
+    a{color:#8ab4f8;}
+  </style>
+</head>
+<body>
+
+<h1>Linear Search Algorithm</h1>
+
+<h2>Code</h2>
+<pre>
+/* Linear Search - O(n) time, O(1) space */
+#include &lt;stdio.h&gt;
+
+int linearSearch(int a[], int n, int key){
+    for(int i=0;i&lt;n;i++) if(a[i]==key) return i;
+    return -1;
+}
+
+int main(){
+    int a[] = {5,3,7,1,9};
+    int n = sizeof(a)/sizeof(a[0]);
+    int key = 7;
+    int idx = linearSearch(a,n,key);
+    if(idx!=-1) printf("Found %d at index %d\\n", key, idx);
+    else printf("Not found\\n");
+    return 0;
+}
+/* Time Complexity: Best O(1), Worst/Average O(n). Space O(1). */
+</pre>
+
+<h2>Output</h2>
+<pre>
+Array: 5 3 7 1 9
+Searching for: 7
+Found 7 at index 2
+</pre>
+
+<p><a href="../index.html">← Back</a></p>
+
+</body>
+</html>

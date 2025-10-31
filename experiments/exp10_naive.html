@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Naïve String Matching | AOA Experiment</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Consolas,monospace;background:#101010;color:#e0e0e0;margin:20px;}
+    pre{background:#181818;border:1px solid #444;padding:12px;border-radius:8px;overflow:auto;}
+    a{color:#8ab4f8;}
+  </style>
+</head>
+<body>
+
+<h1>Naïve String Matching Algorithm</h1>
+
+<h2>Code</h2>
+<pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void naiveStringMatch(char text[], char pattern[]) {
+    int n = strlen(text);
+    int m = strlen(pattern);
+
+    printf("Pattern found at indices: ");
+    int found = 0;
+
+    for (int i = 0; i &lt;= n - m; i++) {
+        int j;
+        for (j = 0; j &lt; m; j++) {
+            if (text[i + j] != pattern[j])
+                break;
+        }
+        if (j == m) {
+            printf("%d ", i);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No match found.");
+    printf("\\n");
+}
+
+int main() {
+    char text[] = "GEEKS FOR GEEKS";
+    char pattern[] = "GEEK";
+
+    printf("Text: %s\\n", text);
+    printf("Pattern: %s\\n", pattern);
+    naiveStringMatch(text, pattern);
+
+    return 0;
+}
+
+/*
+Naive String Matching Algorithm
+Time Complexity: O(n * m)
+Space Complexity: O(1)
+*/
+</pre>
+
+<h2>Output</h2>
+<pre>
+Text: GEEKS FOR GEEKS
+Pattern: GEEK
+Pattern found at indices: 0 10
+</pre>
+
+<p><a href="../index.html">← Back</a></p>
+

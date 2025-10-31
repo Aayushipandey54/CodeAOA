@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Kruskal's Algorithm | AOA Experiment</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body{font-family:Consolas,monospace;background:#101010;color:#e0e0e0;margin:20px;}
+    pre{background:#181818;border:1px solid #444;padding:12px;border-radius:8px;overflow:auto;}
+    a{color:#8ab4f8;}
+  </style>
+</head>
+<body>
+
+<h1>Kruskal’s Algorithm (Minimum Spanning Tree)</h1>
+
+<h2>Code</h2>
+<pre>
+/* Kruskal's MST using Union-Find.
+   Time Complexity: O(E log E)
+   Space: O(E + V)
+*/
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct { int u,v,w; } Edge;
+int cmp(const void *p,const void *q){ return ((Edge*)p)-&gt;w - ((Edge*)q)-&gt;w; }
+
+int findp(int parent[], int x){
+    if(parent[x]==x) return x;
+    return parent[x]=findp(parent,parent[x]);
+}
+void unite(int parent[], int rnk[], int a, int b){
+    a=findp(parent,a); b=findp(parent,b);
+    if(a==b) return;
+    if(rnk[a]&lt;rnk[b]) parent[a]=b;
+    else if(rnk[b]&lt;rnk[a]) parent[b]=a;
+    else { parent[b]=a; rnk[a]++; }
+}
+
+int main(){
+    int V = 4;
+    Edge edges[] = { {0,1,10}, {0,2,6}, {0,3,5}, {1,3,15}, {2,3,4} };
+    int E = sizeof(edges)/sizeof(edges[0]);
+    qsort(edges,E,sizeof(Edge),cmp);
+    int parent[V], rnk[V]; for(int i=0;i&lt;V;i++){ parent[i]=i; rnk[i]=0; }
+    int mst_w = 0;
+    printf("Kruskal edges selected:\n");
+    for(int i=0;i&lt;E;i++){
+        int u = edges[i].u, v = edges[i].v;
+        if(findp(parent,u)!=findp(parent,v)){
+            unite(parent,rnk,u,v);
+            printf("%d - %d : %d\n", u, v, edges[i].w);
+            mst_w += edges[i].w;
+        }
+    }
+    printf("Total MST weight = %d\n", mst_w);
+    return 0;
+}
+/* Compare with Prim:
+   - Prim: O(E log V)
+   - Kruskal: O(E log E)
+*/
+</pre>
+
+<h2>Output</h2>
+<pre>
+Kruskal edges selected:
+2 - 3 : 4
+0 - 3 : 5
+0 - 1 : 10
+Total MST weight = 19
+</pre>
+
+<p><a href="../index.html">← Back</a></p>
+
+</body>
+</html>
